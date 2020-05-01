@@ -66,7 +66,7 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    shade 'org.lwjgl.lwjgl:lwjgl:2.+'
+    compile 'org.lwjgl.lwjgl:lwjgl:2.+'
     shade 'com.github.strikerx3:jxinput:master-SNAPSHOT'
 }
 
