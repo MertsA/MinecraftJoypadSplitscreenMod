@@ -46,7 +46,6 @@ public class ControllerSettings {
 
     public static boolean useConstantCameraMovement = false;
     public static boolean displayHints = false;
-    public static boolean useLegacyInput = false;
 
     public static InputLibrary JoypadModInputLibrary = null;
     public static int joyNo = -1;
@@ -97,32 +96,14 @@ public class ControllerSettings {
         userDefinedBindings = new ArrayList<>();
         grabMouse = ControllerSettings.getGameOption("-Global-.GrabMouse").equals("true");
 
-        if (!useLegacyInput) {
-            // try XInput only first
-            try {
-                JoypadModInputLibrary = new XInputLibrary();
-                JoypadModInputLibrary.create();
-                JoypadMod.logger.info("Using XInput library for Joypad Mod controls");
-            } catch (UnsatisfiedLinkError e) {
-                JoypadMod.logger.error("XInput: Controller object linking error. " + e.toString());
-            } catch (Exception ex) {
-                JoypadMod.logger.error("XInput: Failed creating controller object. " + ex.toString());
-            }
-        } else {
-            JoypadMod.logger.info("XInput: LegacyInput is set to true.");
-        }
-
-        if (JoypadModInputLibrary == null || !JoypadModInputLibrary.isCreated()) {
-            // if it failed fall back to LWJGL
-            try {
-                JoypadModInputLibrary = new LWJGLibrary();
-                JoypadModInputLibrary.create();
-                bMap = new DefaultButtonMappings.LWJGLButtonMappings();
-                aMap = new DefaultAxisMappings.LWJGLAxisMappings();
-                JoypadMod.logger.info("Using LWJGL for Joypad Mod controls");
-            } catch (Exception ex) {
-                Minecraft.getMinecraft().crashed(new CrashReport("Failed creating LWJGL controller object", ex));
-            }
+        try {
+            JoypadModInputLibrary = new LWJGLibrary();
+            JoypadModInputLibrary.create();
+            bMap = new DefaultButtonMappings.LWJGLButtonMappings();
+            aMap = new DefaultAxisMappings.LWJGLAxisMappings();
+            JoypadMod.logger.info("Using LWJGL for Joypad Mod controls");
+        } catch (Exception ex) {
+            Minecraft.getMinecraft().crashed(new CrashReport("Failed creating LWJGL controller object", ex));
         }
     }
 

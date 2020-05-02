@@ -6,7 +6,6 @@ import java.util.Map;
 import com.shiny.joypadmod.ControllerSettings;
 import com.shiny.joypadmod.JoypadMod;
 import com.shiny.joypadmod.devices.InputDevice;
-import com.shiny.joypadmod.devices.XInputDeviceWrapper;
 
 public class ControllerUtils {
     private static Map<String, String> joypadNameMap;
@@ -143,8 +142,7 @@ public class ControllerUtils {
 
     public static int findYAxisIndex(int joyId) {
         InputDevice controller = ControllerSettings.JoypadModInputLibrary.getController(joyId);
-        if (controller.getClass() == XInputDeviceWrapper.class)
-            return 1;
+		
         for (int i = 0; i < controller.getAxisCount(); i++) {
             String axisName = controller.getAxisName(i);
             if (axisName.equals("y") || axisName.contains("Y Axis"))
@@ -156,8 +154,7 @@ public class ControllerUtils {
 
     public static int findXAxisIndex(int joyId) {
         InputDevice controller = ControllerSettings.JoypadModInputLibrary.getController(joyId);
-        if (controller.getClass() == XInputDeviceWrapper.class)
-            return 0;
+		
         for (int i = 0; i < controller.getAxisCount(); i++) {
             String axisName = controller.getAxisName(i);
             if (axisName.equals("x") || axisName.contains("X Axis"))
